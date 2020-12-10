@@ -34,7 +34,7 @@ const handleRegister = (req, res, db, bcrypt) => {
                         name: name
                     })
                     .then(user => {
-                        const token = createToken(user[0])
+                        const token = createToken(user[0].id)
 
                         return res.status(200).json({ token })
                     })

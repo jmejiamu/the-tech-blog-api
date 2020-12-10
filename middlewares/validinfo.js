@@ -21,4 +21,5 @@ module.exports = (req, res, next) => {
             return res.status(401).json("Envalid Email")
         }
     }
+    next();
 }
