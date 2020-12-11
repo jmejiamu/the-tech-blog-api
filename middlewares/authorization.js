@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
 
     //No token
     if (!token) {
-        return res.status(403).json({ msg: "Authorization denied" })
+        return res.status(403).json({ response: "Authorization denied" })
     }
 
     // Verify Token
@@ -21,6 +21,6 @@ module.exports = async (req, res, next) => {
         next();
 
     } catch (err) {
-        res.status(401).json({ msg: "Token is not valid" });
+        res.status(401).json({ response: "Token is not valid" });
     }
 }

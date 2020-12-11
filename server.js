@@ -59,13 +59,13 @@ app.post('/register', validinfo, async (req, res) => {
         const userExist = await db.select('email').from('login').where({ email: email })
 
         if (userExist.length > 0) {
-            return res.json("User already exist")
+            return res.json({ response: "User already exist" })
         }
         register.handleRegister(req, res, db, bcrypt)
 
     } catch (error) {
         console.error(error.message);
-        res.status(400).json("error")
+        res.status(400).json({ response: "error" })
 
     }
 })
@@ -77,7 +77,7 @@ app.get('/isverify', authorization, (req, res) => {
         res.json(true)
     } catch (error) {
         console.error(error.message);
-        res.status(500).json("Server Error")
+        res.status(500).json({ response: "Server Error" })
     }
 })
 
@@ -88,7 +88,7 @@ app.get('/data', authorization, async (req, res) => {
         res.json(user[0])
     } catch (error) {
         console.error(error.message);
-        res.status(500).json('Server Error')
+        res.status(500).json({ response: 'Server Error' })
     }
 })
 
