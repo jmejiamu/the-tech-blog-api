@@ -65,7 +65,7 @@ app.post('/register', validinfo, async (req, res) => {
 
     } catch (error) {
         console.error(error.message);
-        res.status(400).json({ response: "error" })
+        res.status(400).json({ response: "Error" })
 
     }
 })
@@ -83,7 +83,7 @@ app.get('/isverify', authorization, (req, res) => {
 
 app.get('/data', authorization, async (req, res) => {
     try {
-        const user = await db.select('name').from('users').where({ id: req.user })
+        const user = await db.select('id', 'name', 'email').from('users').where({ id: req.user })
         // console.log(user);
         res.json(user[0])
     } catch (error) {
