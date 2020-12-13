@@ -14,7 +14,7 @@ const createToken = (id) => {
 
 const handleRegister = (req, res, db, bcrypt) => {
 
-    const { email, name, password } = req.body;
+    const { email, name, password, picture } = req.body;
 
     const salt = 10;
     const hash = bcrypt.hashSync(password, salt)
@@ -31,7 +31,8 @@ const handleRegister = (req, res, db, bcrypt) => {
                     .returning('*')
                     .insert({
                         email: email,
-                        name: name
+                        name: name,
+                        picture: picture
                     })
                     .then(user => {
                         const token = createToken(user[0].id)

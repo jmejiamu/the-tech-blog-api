@@ -114,7 +114,7 @@ app.get('/isverify', authorization, (req, res) => {
 
 app.get('/data', authorization, async (req, res) => {
     try {
-        const user = await db.select('id', 'name', 'email').from('users').where({ id: req.user })
+        const user = await db.select('id', 'name', 'picture').from('users').where({ id: req.user })
         // console.log(user);
         res.json(user[0])
     } catch (error) {
