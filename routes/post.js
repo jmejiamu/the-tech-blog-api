@@ -8,7 +8,7 @@ const postNewBlog = async (req, res, db) => {
                 context: context
             })
             .into('newblog')
-        res.status(200).send({ post: "INSERTED" })
+        res.status(200).send({ response: "INSERTED" })
     } catch (error) {
         console.error(error.message);
     }
