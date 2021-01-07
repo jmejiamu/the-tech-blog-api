@@ -8,6 +8,7 @@ const multer = require('multer');
 
 // Import all endpoints
 const getAllpost = require('./routes/gets');
+const getAllComment = require('./routes/gets');
 const newblog = require('./routes/post');
 const updataBlog = require('./routes/update');
 const deletePost = require('./routes/delete');
@@ -52,23 +53,59 @@ let upload = multer({ storage: storage });
 
 // update profile picture
 
-app.put('/updateprofilepicture/:user_id', upload.single('photo'), async (req, res) => {
-    try {
-        let path = 'http://157.245.229.180/profile/' + req.file.originalname
-        const { user_id } = req.params;
+// app.put('/updateprofilepicture/:user_id', upload.single('photo'), async (req, res) => {
+//     try {
+//         let path = 'http://157.245.229.180/profile/' + req.file.originalname
+//         const { user_id } = req.params;
 
-        const updateProfile = await db('users').update({
-            picture: path
-        }).where({ id: user_id })
-        res.status(200).send({ response: 'Update profile picture' })
-    } catch (error) {
-        console.error(error.message);
-    }
+//         const updateProfile = await db('users').update({
+//             picture: path
+//         }).where({ id: user_id })
+//         res.status(200).send({ response: 'Update profile picture' })
+//     } catch (error) {
+//         console.error(error.message);
+//     }
+// })
+
+app.put('/updateprofilepicture/:user_id', upload.single('photo'), async (req, res) => {
+
+    let path = 'http://157.245.229.180/profile/' + req.file.originalname
+    const { user_id } = req.params;
+    const { name, email } = req.body;
+    db.transaction(trx => {
+        trx.where({ id: user_id })
+            .update({
+                picture: path,
+                name: name
+            })
+            .into('users')
+            .returning('email')
+            .then(datauser => {
+                return trx('newblog')
+                    .returning('*')
+                    .where({ email: email })
+                    .update({
+                        author: name,
+                        picture: path,
+                    })
+                    .then(data => {
+                        return res.status(200).json({ response: 'updated' })
+                    })
+            })
+            .then(trx.commit)
+            .catch(trx.rollback)
+    })
+        .catch(err => res.status(400).json({ response: "ERROR" }))
+
 })
 
 app.get('/allpost', (req, res) => {
     getAllpost.showAllBlogs(req, res, db);
 });
+
+app.get('/allcomments', (req, res) => {
+    getAllComment.showAllComments(req, res, db);
+})
 
 app.post('/newpost', (req, res) => {
     newblog.postNewBlog(req, res, db);

@@ -6,8 +6,18 @@ const showAllBlogs = async (req, res, db) => {
         console.error(error.message);
     }
 };
+const showAllComments = async (req, res, db) => {
+    try {
+        const data = await db.select('*').from('comments').orderBy('id', 'desc');
+        res.status(200).send(data);
+    } catch (error) {
+        console.error(error.message);
+    }
+};
+
 
 
 module.exports = {
-    showAllBlogs
+    showAllBlogs,
+    showAllComments
 }
