@@ -10,6 +10,7 @@ const multer = require('multer');
 const getAllpost = require('./routes/gets');
 const getAllComment = require('./routes/gets');
 const newblog = require('./routes/post');
+const comment = require('./routes/post');
 const updataBlog = require('./routes/update');
 const deletePost = require('./routes/delete');
 
@@ -110,6 +111,10 @@ app.get('/allcomments', (req, res) => {
 app.post('/newpost', (req, res) => {
     newblog.postNewBlog(req, res, db);
 });
+
+app.post('/comment', (req, res) => {
+    comment.postComment(req, res, db);
+})
 
 app.put('/updateblog/:blog_id', (req, res) => {
     updataBlog.updatePost(req, res, db);
