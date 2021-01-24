@@ -34,12 +34,13 @@ const postComment = async (req, res, db) => {
 
 const addABook = async (req, res, db) => {
     try {
-        const { book_title, book_description, book_cost } = req.body;
+        const { book_title, book_description, book_cost, book_url } = req.body;
         const data = await db
             .insert({
                 book_title: book_title,
                 book_description: book_description,
-                book_cost: book_cost
+                book_cost: book_cost,
+                book_url: book_url
             })
             .into('books')
         res.status(200).send({ response: "data inserted" })
@@ -49,5 +50,6 @@ const addABook = async (req, res, db) => {
 }
 module.exports = {
     postNewBlog,
-    postComment
+    postComment,
+    addABook
 }
