@@ -30,7 +30,22 @@ const postComment = async (req, res, db) => {
     } catch (error) {
         console.error(error.message);
     }
+}
 
+const addABook = async (req, res, db) => {
+    try {
+        const { book_title, book_description, book_cost } = req.body;
+        const data = await db
+            .insert({
+                book_title: book_title,
+                book_description: book_description,
+                book_cost: book_cost
+            })
+            .into('books')
+        res.status(200).send({ response: "data inserted" })
+    } catch (error) {
+        console.error(error.message);
+    }
 }
 module.exports = {
     postNewBlog,
