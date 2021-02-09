@@ -48,8 +48,28 @@ const addABook = async (req, res, db) => {
         console.error(error.message);
     }
 }
+
+const userBook = async (req, res, db) => {
+    try {
+        const { book_title, book_description, book_cost, book_url, user_email, book_id } = req.body;
+        const data = await db
+            .insert({
+                book_title: book_title,
+                book_description: book_description,
+                book_cost: book_cost,
+                book_url: book_url,
+                user_email: user_email,
+                book_id: book_id
+            })
+            .into('user_book')
+        res.status(200).send({ response: "data inserted" })
+    } catch (error) {
+        console.error(error.message);
+    }
+}
 module.exports = {
     postNewBlog,
     postComment,
-    addABook
+    addABook,
+    userBook
 }

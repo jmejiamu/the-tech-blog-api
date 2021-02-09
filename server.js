@@ -10,9 +10,11 @@ const multer = require('multer');
 const getAllpost = require('./routes/gets');
 const getAllComment = require('./routes/gets');
 const getBooks = require('./routes/gets');
+const getUserBooks = require('./routes/gets');
 const newblog = require('./routes/post');
 const comment = require('./routes/post');
 const book = require('./routes/post');
+const userbook = require('./routes/post');
 const updataBlog = require('./routes/update');
 const deletePost = require('./routes/delete');
 
@@ -114,8 +116,16 @@ app.get('/allcomments', (req, res) => {
     getAllComment.showAllComments(req, res, db);
 })
 
+
+app.get('/userbook', (req, res) => {
+    getUserBooks.getuserbooks(req, res, db);
+})
 app.post('/book', (req, res) => {
     book.addABook(req, res, db);
+})
+
+app.post('/useraddbooks', (req, res) => {
+    userbook.userBook(req, res, db);
 })
 
 app.post('/newpost', (req, res) => {

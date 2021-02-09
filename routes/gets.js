@@ -24,8 +24,18 @@ const books = async (req, res, db) => {
     }
 };
 
+
+const getuserbooks = async (req, res, db) => {
+    try {
+        const data = await db.select('*').from('user_book').orderBy('id', 'desc');
+        res.status(200).send(data);
+    } catch (error) {
+        console.error(error.message);
+    }
+};
 module.exports = {
     showAllBlogs,
     showAllComments,
-    books
+    books,
+    getuserbooks
 }
