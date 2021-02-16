@@ -17,6 +17,7 @@ const book = require('./routes/post');
 const userbook = require('./routes/post');
 const updataBlog = require('./routes/update');
 const deletePost = require('./routes/delete');
+const deleteABook = require('./routes/delete');
 
 // Register and Sign in
 const register = require('./controllers/register');
@@ -110,6 +111,10 @@ app.get('/allpost', (req, res) => {
 
 app.get('/books', (req, res) => {
     getBooks.books(req, res, db);
+})
+
+app.delete('/deletebook/:delete_id',(req, res) => {
+deleteABook.deleteBook(req, res, db)
 })
 
 app.get('/allcomments', (req, res) => {
