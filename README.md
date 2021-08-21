@@ -2,6 +2,7 @@
 ### Technologies used:
 * Node
 * Express
+* KnexJs
 * PostgreSQL
 * JWT
 
